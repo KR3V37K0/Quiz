@@ -9,11 +9,6 @@ public class Team_panel_Touch : MonoBehaviour
     void Start()
     {
         LobbySc = GameObject.Find("Main Camera").GetComponent<Menu_and_Lobby>();
-        Debug.Log(LobbySc.gameObject.name);
-    }
-    void Update()
-    {
-        
     }
     public void OnMouseEnter()
     {
