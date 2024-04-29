@@ -7,7 +7,8 @@ using TMPro;
 public class Menu_and_Lobby : MonoBehaviour
 {
     public Canvas canvas_Main, canvas_Lobby;
-    [SerializeField]
+    public GameObject panel_Records;
+    public Records RecordsSc;
     private int ActiveTeam = 0;
 
     public Sprite[] all_Skins;
@@ -28,11 +29,21 @@ public class Menu_and_Lobby : MonoBehaviour
     {
         canvas_Lobby.gameObject.SetActive(false);
         canvas_Main.gameObject.SetActive(false);
+        panel_Records.SetActive(false);
     }
     public void Button_Exit()
     {
         Application.Quit();
     }   
+    public void Button_Records()
+    {
+        panel_Records.SetActive(true);
+        RecordsSc.LoadRecords();
+    }
+    public void Button_RecordsClose()
+    {
+        panel_Records.SetActive(false);
+    }
     public void Button_to_MainMenu()
     {
         allClose();
