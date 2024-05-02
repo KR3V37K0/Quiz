@@ -6,7 +6,7 @@ using TMPro;
 
 public class Menu_and_Lobby : MonoBehaviour
 {
-    public Canvas canvas_Main, canvas_Lobby;
+    public Canvas canvas_Main, canvas_Lobby,canvas_Question,canvas_Selection;
     [SerializeField]
     private int ActiveTeam = 0;
 
@@ -15,6 +15,7 @@ public class Menu_and_Lobby : MonoBehaviour
     public string[] TeamName;
     public Sprite[] TeamSkin;
     public GameObject[] Teams;
+    public Quiz_Controller Quiz_ControllerSc;
 
 
     public void Start()
@@ -28,6 +29,8 @@ public class Menu_and_Lobby : MonoBehaviour
     {
         canvas_Lobby.gameObject.SetActive(false);
         canvas_Main.gameObject.SetActive(false);
+        canvas_Question.gameObject.SetActive(false);
+        canvas_Selection.gameObject.SetActive(false);
     }
     public void Button_Exit()
     {
@@ -47,7 +50,7 @@ public class Menu_and_Lobby : MonoBehaviour
         {
             if(TeamName[n] != null)
             {
-                Teams[n].gameObject.transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.GetComponent<TMP_InputField>().text=TeamName[n];
+                Teams[n].gameObject.transform.Find("Team_panel_Group/Input_Team_Name").gameObject.GetComponent<TMP_InputField>().text=TeamName[n];
             }
         }
 
@@ -58,10 +61,10 @@ public class Menu_and_Lobby : MonoBehaviour
         //ExitTeamPanel(number); 
         int n = int.Parse(" " + number[5]) - 1;
         ActiveTeam = n+1;
-        if (Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.activeSelf)
+        if (Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Input_Team_Name").gameObject.activeSelf)
         {
-            Teams[n].transform.GetChild(0).gameObject.transform.Find("Buttom_DeleteTeam").gameObject.SetActive(true); // включает кнопку "удалить"
-            Teams[n].transform.GetChild(0).gameObject.transform.Find("panel_Tone").gameObject.SetActive(true);//включает тонировку
+            Teams[n].transform.Find("Team_panel_Group/Buttom_DeleteTeam").gameObject.SetActive(true); // включает кнопку "удалить"
+            Teams[n].transform.Find("Team_panel_Group/panel_Tone").gameObject.SetActive(true);//включает тонировку
         }                                                                                                                                                                                                                                   
     }
     public void ExitTeamPanel(string exclude)
@@ -73,16 +76,16 @@ public class Menu_and_Lobby : MonoBehaviour
         {
             if (Teams[n].name != exclude) 
             { 
-                Teams[n].transform.GetChild(0).gameObject.transform.Find("Buttom_DeleteTeam").gameObject.SetActive(false); // выключает кнопку "удалить"
-                Teams[n].transform.GetChild(0).gameObject.transform.Find("panel_Tone").gameObject.SetActive(false);// выключает тонировку
+                Teams[n].transform.Find("Team_panel_Group/Buttom_DeleteTeam").gameObject.SetActive(false); // выключает кнопку "удалить"
+                Teams[n].transform.Find("Team_panel_Group/panel_Tone").gameObject.SetActive(false);// выключает тонировку
             }
         }
     }
     public void Button_AddTeam()
     {
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Team_Skin").gameObject.SetActive(true);// Skin
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.SetActive(true);// Name
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Button_Add").gameObject.SetActive(false);// Button Add
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Team_Skin").gameObject.SetActive(true);// Skin
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Input_Team_Name").gameObject.SetActive(true);// Name
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Button_Add").gameObject.SetActive(false);// Button Add
         TeamName[ActiveTeam - 1] = "Команда "+ActiveTeam;
         Teams[ActiveTeam - 1].gameObject.transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.GetComponent<TMP_InputField>().text = TeamName[ActiveTeam - 1];
         OnTeamPanel("Team_"+ActiveTeam);
@@ -103,11 +106,11 @@ public class Menu_and_Lobby : MonoBehaviour
     }
     public void Button_DeleteTeam()
     {
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Team_Skin").gameObject.SetActive(false);// Skin
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.SetActive(false);// Name
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Button_Add").gameObject.SetActive(true);// Button Add
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("Buttom_DeleteTeam").gameObject.SetActive(false);// Button Delete
-        Teams[ActiveTeam - 1].transform.GetChild(0).gameObject.transform.Find("panel_Tone").gameObject.SetActive(false);// тонировка
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Team_Skin").gameObject.SetActive(false);// Skin
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Input_Team_Name").gameObject.SetActive(false);// Name
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Button_Add").gameObject.SetActive(true);// Button Add
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Buttom_DeleteTeam").gameObject.SetActive(false);// Button Delete
+        Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/panel_Tone").gameObject.SetActive(false);// тонировка
         TeamName[ActiveTeam - 1] = null;
 
 
@@ -120,7 +123,7 @@ public class Menu_and_Lobby : MonoBehaviour
                 count++;
             }
         }
-        if(count==0)gameObject.transform.Find("canvas_Lobby").gameObject.transform.Find("Button_Start").gameObject.GetComponent<Button>().interactable = false;
+        if(count==0)gameObject.transform.Find("canvas_Lobby/Button_Start").gameObject.GetComponent<Button>().interactable = false;
     }
     public void Lobby_To_Start()
     {
@@ -136,7 +139,7 @@ public class Menu_and_Lobby : MonoBehaviour
     }
     public void Set_Name()
     {
-        TeamName[ActiveTeam - 1] = Teams[ActiveTeam - 1].gameObject.transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.GetComponent<TMP_InputField>().text;
+        TeamName[ActiveTeam - 1] = Teams[ActiveTeam - 1].gameObject.transform.Find("Team_panel_Group/Input_Team_Name").gameObject.GetComponent<TMP_InputField>().text;
     }
     public void Button_NextSkin()
     {
@@ -156,8 +159,8 @@ public class Menu_and_Lobby : MonoBehaviour
     private void VisualizeSkin()
     {
         for (int n = 0; n < 6; n++) 
-        { 
-            Teams[n].gameObject.transform.GetChild(0).gameObject.transform.Find("Team_Skin").gameObject.GetComponent<Image>().sprite = TeamSkin[n];
+        {
+            Teams[n].gameObject.transform.Find("Team_panel_Group/Team_Skin").gameObject.GetComponent<Image>().sprite = TeamSkin[n];
         }
     }
 
@@ -165,6 +168,7 @@ public class Menu_and_Lobby : MonoBehaviour
 
     public void Button_Start_Game()
     {
+
         int count = 0;
         for(int n=0; n < TeamName.Length; n++)
         {
@@ -173,7 +177,26 @@ public class Menu_and_Lobby : MonoBehaviour
                 count++;
             }
         }
-        if (count != 0) Debug.Log("game has been started with " + count + " players");
+        if (count != 0) 
+        {
+            int count2 = 0;
+            Debug.Log("game has been started with " + count + " players");
+
+            string[] TeamName_toStart = new string[count];
+            string[] TeamSkin_toStart = new string[count];
+            for (int n = 0; n < TeamName.Length; n++)
+            {
+                if (TeamName[n] != null)
+                {
+                    TeamName_toStart[count2] = TeamName[n];
+                    TeamSkin_toStart[count2] = TeamSkin[n].name;
+                    count2++;
+                }
+            }
+            allClose();
+            Quiz_ControllerSc.Start_Quiz(TeamName_toStart, TeamSkin_toStart);
+            
+        }
         
     }
 }

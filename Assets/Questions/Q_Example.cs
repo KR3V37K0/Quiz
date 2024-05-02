@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "New Question", menuName = "Question Data", order = 51)]
+[CreateAssetMenu(fileName = "Q", menuName = "Question Data", order = 51)]
 public class Q_Example : ScriptableObject
 {
     [SerializeField]
