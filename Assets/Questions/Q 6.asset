@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5a0f26809885649a296e127c05ad38, type: 3}
   m_Name: Q 6
   m_EditorClassIdentifier: 
-  Category: 
-  Text: 
-  Photo: {fileID: 0}
+  Category: "\u043A6"
+  Text: "\u04426"
+  Photo: {fileID: 21300000, guid: 62dd5415953f44d479ac35e5bdf2f59c, type: 3}
   Video: {fileID: 0}
-  True: 
-  False: []
-  Score: 0
+  True: "\u043F\u0440"
+  False:
+  - "\u043B1"
+  - "\u043B2"
+  - "\u043B3"
+  - "\u043B4"
+  - "\u043B5"
+  Score: 278

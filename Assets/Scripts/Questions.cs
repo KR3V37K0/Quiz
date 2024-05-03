@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
+using System;
 
 public class Questions : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class Questions : MonoBehaviour
 
     private Q_Example[] randomQ = new Q_Example[4];
     private int[] randomID = new int[4];
+    public int[] IDforShuffle;
 
     public void Start()
     {
@@ -24,22 +27,43 @@ public class Questions : MonoBehaviour
         int i = 0;
 
 
-        for(int n =0;n<4;n++)
+        for (int x = 0; x < Qustions_Array.Length; x++)
+            IDforShuffle[x] = x;
+        shuffle_Cat(IDforShuffle);
+        for (int n =0;n<4;n++)
         {
-            i = Random.Range(0, Qustions_Array.Length-1);
-            randomQ[n] = Qustions_Array[i];
-            randomID[n] = i;
-
+            /*i = Random.Range(0, Qustions_Array.Length-1);*/
             
+
+            randomQ[n] = Qustions_Array[IDforShuffle[n]];
+            randomID[n] = IDforShuffle[n];
+
+            /*
             for(int z = 0; z < n+1; z++)
             {
                 if (randomID[z] == randomID[n]) UniqV(z,randomID);
                 else if (randomQ[z] == empty) UniqV(z, randomID);
-            }
+            }*/
         }
         ControllSc.VizualizeVariants(randomID, randomQ);
     }
-    public void UniqV(int ID,int[] massive)
+
+    public void shuffle_Cat(int[] arr)
+    {
+        Random rand = new Random();
+
+        for (int i = arr.Length - 1; i >= 1; i--)
+        {
+            int j = rand.Next(i + 1);
+
+            int tmp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = tmp;
+        }
+        IDforShuffle = arr;
+    }
+
+    /*public void UniqV(int ID,int[] massive)
     {
         count_Stop++;
         if (count_Stop > Qustions_Array.Length) { Debug.Log("ERROR"+count_Stop);return; }
@@ -63,9 +87,10 @@ public class Questions : MonoBehaviour
             Debug.Log("EXELENT!!!");
             return;
         }
-    }
+    }*/
     public void SetCompleted(int ID)
     {
-        Qustions_Array[ID] = empty;
+        Random rand = new Random();
+        Qustions_Array[ID] = Qustions_Array[rand.Next(0, Qustions_Array.Length)];
     }
 }
