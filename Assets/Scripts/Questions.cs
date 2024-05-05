@@ -9,7 +9,7 @@ public class Questions : MonoBehaviour
 {
     public Q_Example[] Qustions_Array;
     public Quiz_Controller ControllSc;
-    private int count_Stop = 0;
+    //private int count_Stop = 0;
     public Q_Example empty;
 
     private Q_Example[] randomQ = new Q_Example[4];
@@ -21,10 +21,10 @@ public class Questions : MonoBehaviour
     }
     public void Get4Question()
     {
-        count_Stop = 0;
+        //count_Stop = 0;
         randomID = new int[4];
         randomQ = new Q_Example[4];
-        int i = 0;
+        //int i = 0;
 
 
         for (int x = 0; x < Qustions_Array.Length; x++)

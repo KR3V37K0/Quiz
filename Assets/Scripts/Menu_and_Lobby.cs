@@ -11,11 +11,15 @@ public class Menu_and_Lobby : MonoBehaviour
     private int ActiveTeam = 0;
 
     public Sprite[] all_Skins;
+    public Sprite[] all_Icons;
 
     public string[] TeamName;
     public Sprite[] TeamSkin;
+    public Sprite[] TeamIcon;
     public GameObject[] Teams;
     public Quiz_Controller Quiz_ControllerSc;
+
+    public TeamSc[] Team=new TeamSc[6];
 
 
     public void Start()
@@ -24,6 +28,14 @@ public class Menu_and_Lobby : MonoBehaviour
         canvas_Main.gameObject.SetActive(true);
         ExitTeamPanel(null);
         Lobby_To_Start();
+
+        for(int n = 0; n < 6; n++)
+        {
+            Team[n].set_Name(null);
+            Team[n].set_Skin(null);
+            Team[n].set_Icon(null);
+            Team[n].set_Score(0);
+        }
     }
     private void allClose()
     {
@@ -147,6 +159,7 @@ public class Menu_and_Lobby : MonoBehaviour
         if (!(n < all_Skins.Length)) n = 0;
 
         TeamSkin[ActiveTeam - 1] = all_Skins[n];
+        //TeamIcon[ActiveTeam - 1] = all_Icons[n];
         VisualizeSkin();
     }
     public void Button_PastSkin()
@@ -154,6 +167,7 @@ public class Menu_and_Lobby : MonoBehaviour
         int n = int.Parse(TeamSkin[ActiveTeam - 1].name) - 2;
         if (n==-1) n = all_Skins.Length-1;
         TeamSkin[ActiveTeam - 1] = all_Skins[n];
+        //TeamIcon[ActiveTeam - 1] = all_Icons[n];
         VisualizeSkin();
     }
     private void VisualizeSkin()
@@ -180,21 +194,29 @@ public class Menu_and_Lobby : MonoBehaviour
         if (count != 0) 
         {
             int count2 = 0;
-            Debug.Log("game has been started with " + count + " players");
+            //Debug.Log("game has been started with " + count + " players");
 
-            string[] TeamName_toStart = new string[count];
-            string[] TeamSkin_toStart = new string[count];
+            //string[] TeamName_toStart = new string[count];
+            //string[] TeamSkin_toStart = new string[count];
             for (int n = 0; n < TeamName.Length; n++)
             {
                 if (TeamName[n] != null)
                 {
-                    TeamName_toStart[count2] = TeamName[n];
-                    TeamSkin_toStart[count2] = TeamSkin[n].name;
+                    TeamIcon[n] = all_Icons[int.Parse(TeamSkin[n].name)-1];
+                    Team[count2].set_Name(TeamName[n]);
+                    Team[count2].set_Skin(TeamSkin[n]);
+                    Team[count2].set_Icon(TeamIcon[n]);
+
+
+                    //TeamName_toStart[count2] = TeamName[n];
+                    //TeamSkin_toStart[count2] = TeamSkin[n].name;
                     count2++;
                 }
             }
+
             allClose();
-            Quiz_ControllerSc.Start_Quiz(TeamName_toStart, TeamSkin_toStart);
+
+            Quiz_ControllerSc.Start_Quiz(Team,count2);
             
         }
         
