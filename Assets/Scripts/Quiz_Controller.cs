@@ -10,6 +10,9 @@ using System;
 
 public class Quiz_Controller : MonoBehaviour
 {
+    public int Max_Rounds;
+    private int round = 0;
+
     private TeamSc[] Teams = new TeamSc[6];
     private int PlayerCount = 0;
     public GameObject[] TeamsAvatar;
@@ -28,10 +31,12 @@ public class Quiz_Controller : MonoBehaviour
     public TMP_Text Q_score, Q_Category, Q_Text;
     public TMP_Text[] Answers_text;
     public Button button_Image_View;
+    public Button button_OK;
     private GameObject panel_Image;
     public int SelectedTeam;
 
     private string[] Lies;
+    public int True = 4;
     private int[] b = new int[4];
 
 
@@ -79,6 +84,10 @@ public class Quiz_Controller : MonoBehaviour
     public void VizualizeVariants(int[] ID, Q_Example[] Questions)
     {
         panel_Image.SetActive(false);
+        canvas_Question.gameObject.SetActive(false);
+        canvas_Selection.gameObject.SetActive(true );
+        
+
 
         Var4ID = ID;
         Var4Question = Questions;
@@ -102,6 +111,7 @@ public class Quiz_Controller : MonoBehaviour
 
     public void Question_Viev()
     {
+        button_OK.gameObject.SetActive(false);
         if (ThisQuestion.photo) panel_Image.transform.Find("Image").gameObject.GetComponent<Image>().sprite = ThisQuestion.photo;
 
         canvas_Selection.gameObject.SetActive(false);
@@ -114,7 +124,8 @@ public class Quiz_Controller : MonoBehaviour
         }
         else button_Image_View.gameObject.SetActive(false);
         Random rand = new Random();
-        Answers_text[rand.Next(0, 4)].text = ThisQuestion.answer;
+        True = rand.Next(0, 4);
+        Answers_text[True].text = ThisQuestion.answer;
         int c = 0;
         shuffle_Lie(ThisQuestion.lie);
         for (int count=0; count < 4; count++)
@@ -140,6 +151,7 @@ public class Quiz_Controller : MonoBehaviour
         canvas_Teams.gameObject.SetActive(true);
         for(int n = 0; n < PlayerCount; n++)
         {
+            Teams[n].set_Answer(4);
             TeamsAvatar[n].transform.Find("ICO/Text_Name").gameObject.GetComponent<TMP_Text>().text = Teams[n].get_Name;
             TeamsAvatar[n].transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().text = "0";
             TeamsAvatar[n].transform.Find("ICO/Image").gameObject.GetComponent<Image>().sprite = Teams[n].get_Icon;
@@ -148,13 +160,60 @@ public class Quiz_Controller : MonoBehaviour
         }
     }
     public void Button_SetAnswer(int button_numb)
-    {       
-        b[button_numb]++;
-        ButtonVer[button_numb].gameObject.transform.Find("char " + b[button_numb]).gameObject.SetActive(true);
+    {
+        if (Teams[SelectedTeam].get_Answer !=button_numb) 
+        { 
+            if (Teams[SelectedTeam].get_Answer != 4)
+            {
+                ButtonVer[Teams[SelectedTeam].get_Answer].gameObject.transform.Find("char " + b[Teams[SelectedTeam].get_Answer]).gameObject.SetActive(false);
+                b[Teams[SelectedTeam].get_Answer] -=1;
+            }
+            b[button_numb]++;
+            ButtonVer[button_numb].gameObject.transform.Find("char " + b[button_numb]).gameObject.GetComponent<Image>().sprite = Teams[SelectedTeam].get_Mini;
+            ButtonVer[button_numb].gameObject.transform.Find("char " + b[button_numb]).gameObject.SetActive(true);
+            Teams[SelectedTeam].set_Answer(button_numb);
+        }
+        for(int n = 0; n < PlayerCount; n++)
+        {
+            button_OK.gameObject.SetActive(true);
+            if(Teams[n].get_Answer==4) button_OK.gameObject.SetActive(false);
+        }
+
     }
     public void Button_SetPlayer(int playerID)
     {
-        Debug.Log(playerID+" нажал");
         SelectedTeam = playerID;
+    }
+    public void Button_OK_Answers()
+    {
+        StartCoroutine(Calculate());
+    }
+    public IEnumerator Calculate()
+    {
+        button_OK.gameObject.SetActive(false);
+        ButtonVer[True].interactable = false;
+        for (int n = 0; n < PlayerCount; n++)
+        {
+            if (Teams[n].get_Answer == True)
+            {
+                TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().color = Color.green;
+                Teams[n].set_Score(Teams[n].get_Score + ThisQuestion.score);                
+            }
+            else
+            {
+                TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().color = Color.red;
+                Teams[n].set_Score(Teams[n].get_Score - ThisQuestion.score);
+            }
+            Teams[n].set_Answer(4);
+            TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().text = Teams[n].get_Score.ToString();
+            yield return new WaitForSeconds(1.5f);
+        }
+        for (int n = 0; n < PlayerCount; n++)
+            TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().color = Color.white;
+
+
+        ButtonVer[True].interactable = true;
+        QuestionsSc.Get4Question();
+
     }
 }
