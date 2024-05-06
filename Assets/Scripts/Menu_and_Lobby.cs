@@ -21,6 +21,8 @@ public class Menu_and_Lobby : MonoBehaviour
     public GameObject[] Teams;
     public Quiz_Controller Quiz_ControllerSc;
 
+    public GameObject Record_Panel,Record_Line;
+
     public TeamSc[] Team=new TeamSc[6];
 
 
@@ -46,6 +48,7 @@ public class Menu_and_Lobby : MonoBehaviour
         canvas_Question.gameObject.SetActive(false);
         canvas_Selection.gameObject.SetActive(false);
         canvas_Win.gameObject.SetActive(false);
+        Record_Panel.SetActive(false);
     }
     public void Button_Exit()
     {
@@ -225,5 +228,13 @@ public class Menu_and_Lobby : MonoBehaviour
             
         }
         
+    }
+    public void Button_ViewRecord()
+    {
+        Record_Panel.SetActive(true);
+    }
+    public void Button_CloseRecord()
+    {
+        Record_Panel.SetActive(false);
     }
 }

@@ -18,7 +18,7 @@ public class Quiz_Controller : MonoBehaviour
     private int PlayerCount = 0;
     public GameObject[] TeamsAvatar;
 
-    public Canvas canvas_Question, canvas_Selection,canvas_Teams,canvas_Win;
+    public Canvas canvas_Question, canvas_Selection,canvas_Teams,canvas_Win, canvas_Round;
     public Menu_and_Lobby LobbySc;
     public Questions QuestionsSc;
 
@@ -47,9 +47,11 @@ public class Quiz_Controller : MonoBehaviour
         canvas_Selection.gameObject.SetActive(false);
         canvas_Teams.gameObject.SetActive(false);
         canvas_Win.gameObject.SetActive(false);
+        canvas_Round.gameObject.SetActive(false);
     }
     void Start()
     {
+        all_Close();
         for(int n = 0; n < 4; n++)
         {
             ButtonVer[n] = canvas_Question.gameObject.transform.Find("style_classic/Buttons/Button_Answer " + (n+1)).gameObject.GetComponent<Button>();
@@ -86,8 +88,8 @@ public class Quiz_Controller : MonoBehaviour
             if (Teams[n].get_Name == null) Teams[n] = null;
         }
         Create_Teams();
-        QuestionsSc.Get4Question();
-        canvas_Selection.gameObject.SetActive(true);
+        StartCoroutine(NumberRound("ROUND 1"));
+        //QuestionsSc.Get4Question();      
        
     }
     public void VizualizeVariants(int[] ID, Q_Example[] Questions)
@@ -95,6 +97,7 @@ public class Quiz_Controller : MonoBehaviour
         panel_Image.SetActive(false);
         canvas_Question.gameObject.SetActive(false);
         canvas_Selection.gameObject.SetActive(true );
+        canvas_Teams.gameObject.SetActive(true);
         
 
 
@@ -140,7 +143,7 @@ public class Quiz_Controller : MonoBehaviour
         shuffle_Lie(ThisQuestion.lie);
         for (int count=0; count < 4; count++)
         {          
-            if (Answers_text[count].text != ThisQuestion.answer)
+            if (count != True)
             {
                 Answers_text[count].text = Lies[c];
                 c++;
@@ -239,9 +242,13 @@ public class Quiz_Controller : MonoBehaviour
         for (int n = 0; n < PlayerCount; n++)
         {
             if (Teams[n].get_Score == maxScore) countWiner++;       
-        }     
-        if ((round>=Max_Rounds)&&(countWiner==1)) StartCoroutine(Win());
-        else QuestionsSc.Get4Question();
+        }
+        if ((round >= Max_Rounds) && (countWiner == 1)) StartCoroutine(Win());
+        else 
+        {
+            if(round >= Max_Rounds) StartCoroutine(NumberRound("BONUS ROUND "+round.ToString()));           
+            else StartCoroutine(NumberRound("ROUND " + round.ToString()));
+        }
 
     }
     public IEnumerator Win()
@@ -281,5 +288,19 @@ public class Quiz_Controller : MonoBehaviour
         canvas_Win.gameObject.transform.Find("Image_WinnerSkin").gameObject.GetComponent<Image>().sprite = Rating[0].get_Skin;
 
         yield return new WaitForSeconds(1.5f);
+    }
+    public void Button_ExitToMenu()
+    {
+        all_Close();
+        LobbySc.Start();
+    }
+    private IEnumerator NumberRound(string t)
+    {
+        all_Close();
+        canvas_Round.gameObject.SetActive(true);
+        canvas_Round.gameObject.transform.Find("Panel/Text").gameObject.GetComponent<TMP_Text>().text = t;
+        yield return new WaitForSeconds(1.5f);
+        all_Close();
+        QuestionsSc.Get4Question();
     }
 }
