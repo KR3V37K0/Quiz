@@ -6,7 +6,7 @@ using TMPro;
 
 public class Menu_and_Lobby : MonoBehaviour
 {
-    public Canvas canvas_Main, canvas_Lobby,canvas_Question,canvas_Selection;
+    public Canvas canvas_Main, canvas_Lobby,canvas_Question,canvas_Selection,canvas_Win;
     [SerializeField]
     private int ActiveTeam = 0;
 
@@ -45,6 +45,7 @@ public class Menu_and_Lobby : MonoBehaviour
         canvas_Main.gameObject.SetActive(false);
         canvas_Question.gameObject.SetActive(false);
         canvas_Selection.gameObject.SetActive(false);
+        canvas_Win.gameObject.SetActive(false);
     }
     public void Button_Exit()
     {

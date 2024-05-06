@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Random = System.Random;
 using System;
+using Unity.Burst.Intrinsics;
 
 
 
@@ -17,7 +18,7 @@ public class Quiz_Controller : MonoBehaviour
     private int PlayerCount = 0;
     public GameObject[] TeamsAvatar;
 
-    public Canvas canvas_Question, canvas_Selection,canvas_Teams;
+    public Canvas canvas_Question, canvas_Selection,canvas_Teams,canvas_Win;
     public Menu_and_Lobby LobbySc;
     public Questions QuestionsSc;
 
@@ -40,6 +41,13 @@ public class Quiz_Controller : MonoBehaviour
     private int[] b = new int[4];
 
 
+    void all_Close()
+    {
+        canvas_Question.gameObject.SetActive(false);
+        canvas_Selection.gameObject.SetActive(false);
+        canvas_Teams.gameObject.SetActive(false);
+        canvas_Win.gameObject.SetActive(false);
+    }
     void Start()
     {
         for(int n = 0; n < 4; n++)
@@ -70,6 +78,7 @@ public class Quiz_Controller : MonoBehaviour
     }
     public void Start_Quiz(TeamSc[] teams,int count)
     {
+        round = 0;
         Teams = teams;
         PlayerCount = count;
         for (int n = 0; n < 6; n++)
@@ -111,6 +120,7 @@ public class Quiz_Controller : MonoBehaviour
 
     public void Question_Viev()
     {
+        round++;
         button_OK.gameObject.SetActive(false);
         if (ThisQuestion.photo) panel_Image.transform.Find("Image").gameObject.GetComponent<Image>().sprite = ThisQuestion.photo;
 
@@ -130,7 +140,7 @@ public class Quiz_Controller : MonoBehaviour
         shuffle_Lie(ThisQuestion.lie);
         for (int count=0; count < 4; count++)
         {          
-            if (Answers_text[count].text == "ÎÒÂÅÒ îòâåò ")
+            if (Answers_text[count].text != ThisQuestion.answer)
             {
                 Answers_text[count].text = Lies[c];
                 c++;
@@ -213,7 +223,63 @@ public class Quiz_Controller : MonoBehaviour
 
 
         ButtonVer[True].interactable = true;
-        QuestionsSc.Get4Question();
+        for(int n = 0; n < 4; n++)
+        {
+            for(int n2 = 1;n2 < 7; n2++) 
+            {
+                ButtonVer[n].gameObject.transform.Find("char " + n2).gameObject.SetActive(false);
+            }
+            b[n] = 0;
+        }
+        int maxScore=0, countWiner = 0;
+        for (int n = 0;n < PlayerCount;n++)
+        {
+            if (Teams[n].get_Score>maxScore)maxScore = Teams[n].get_Score;
+        }
+        for (int n = 0; n < PlayerCount; n++)
+        {
+            if (Teams[n].get_Score == maxScore) countWiner++;       
+        }     
+        if ((round>=Max_Rounds)&&(countWiner==1)) StartCoroutine(Win());
+        else QuestionsSc.Get4Question();
 
+    }
+    public IEnumerator Win()
+    {
+        all_Close();
+        canvas_Win.gameObject.transform.Find("Panel/Text_Winner").gameObject.SetActive(false);
+        canvas_Win.gameObject.transform.Find("Image_WinnerSkin").gameObject.SetActive(false);
+        canvas_Win.gameObject.SetActive(true);
+
+        TeamSc[] Rating = Teams;
+        TeamSc temp;
+
+        for (int i = 0; i < PlayerCount; i++) 
+        { for (int j = i + 1; j < PlayerCount; j++) 
+            { if (Rating[i].get_Score < Rating[j].get_Score)
+                {
+                    temp = Rating[i];
+                    Rating[i] = Rating[j];
+                    Rating[j] = temp;
+                }
+            }
+        }
+        for (int i = PlayerCount-1; i > -1; i--) 
+        {
+            yield return new WaitForSeconds(1.5f);
+            //Debug.Log(Rating[i].get_Score.ToString());
+            canvas_Win.gameObject.transform.Find("Panel/Place " + (i+1)).gameObject.SetActive(true);
+            canvas_Win.gameObject.transform.Find("Panel/Place " + (i + 1) + "/Panel_Score/Text_Name").gameObject.GetComponent<TMP_Text>().text = Rating[i].get_Name;
+            canvas_Win.gameObject.transform.Find("Panel/Place " + (i + 1) + "/Panel_Score/Text_Score").gameObject.GetComponent<TMP_Text>().text = Rating[i].get_Score.ToString();
+            canvas_Win.gameObject.transform.Find("Panel/Place " + (i + 1) + "/Panel_Score/Image_Mini").gameObject.GetComponent<Image>().sprite = Rating[i].get_Mini;
+            canvas_Win.gameObject.transform.Find("Panel/Place " + (i + 1) + "/Panel_Score/Image_Mini/Text_Place").gameObject.GetComponent<TMP_Text>().text = (i + 1).ToString();
+
+
+        }
+        canvas_Win.gameObject.transform.Find("Panel/Text_Winner").gameObject.SetActive(true);
+        canvas_Win.gameObject.transform.Find("Image_WinnerSkin").gameObject.SetActive(true);
+        canvas_Win.gameObject.transform.Find("Image_WinnerSkin").gameObject.GetComponent<Image>().sprite = Rating[0].get_Skin;
+
+        yield return new WaitForSeconds(1.5f);
     }
 }
