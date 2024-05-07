@@ -291,8 +291,9 @@ public class Quiz_Controller : MonoBehaviour
     }
     public void Button_ExitToMenu()
     {
-        all_Close();
-        LobbySc.Start();
+        //all_Close();
+        //LobbySc.Start();
+        Application.Quit();
     }
     private IEnumerator NumberRound(string t)
     {
