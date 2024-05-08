@@ -209,7 +209,7 @@ public class Menu_and_Lobby : MonoBehaviour
                 if (TeamName[n] != null)
                 {
                     TeamIcon[n] = all_Icons[int.Parse(TeamSkin[n].name)-1];
-                    TeamMini[n] = all_Icons[int.Parse(TeamMini[n].name) - 1];
+                    TeamMini[n] = all_Minis[int.Parse(TeamSkin[n].name) - 1];//___________________MINIS or ICONS
                     Team[count2].set_Name(TeamName[n]);
                     Team[count2].set_Skin(TeamSkin[n]);
                     Team[count2].set_Icon(TeamIcon[n]);

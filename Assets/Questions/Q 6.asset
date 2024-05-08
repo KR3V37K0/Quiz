@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5a0f26809885649a296e127c05ad38, type: 3}
   m_Name: Q 6
   m_EditorClassIdentifier: 
-  Category: "\u043A6"
-  Text: "\u04426"
-  Photo: {fileID: 21300000, guid: 62dd5415953f44d479ac35e5bdf2f59c, type: 3}
+  Category: "\u0418\u0441\u0442\u043E\u0440\u0438\u044F \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0430"
+  Text: "\u0412 \u043A\u0430\u043A\u043E\u043C \u0433\u043E\u0434\u0443 \u0431\u044B\u043B\u0430
+    \u043E\u0441\u043D\u043E\u0432\u0430\u043D\u0430 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u044F
+    Apple"
+  Photo: {fileID: 0}
   Video: {fileID: 0}
-  True: "\u043F\u0440"
+  True: 1976
   False:
-  - "\u043B1"
-  - "\u043B2"
-  - "\u043B3"
-  - "\u043B4"
-  - "\u043B5"
-  Score: 278
+  - 1971
+  - 2000
+  - 1991
+  - 2010
+  - 1984
+  Score: 100

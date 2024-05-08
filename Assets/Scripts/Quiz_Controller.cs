@@ -12,7 +12,7 @@ using Unity.Burst.Intrinsics;
 public class Quiz_Controller : MonoBehaviour
 {
     public int Max_Rounds;
-    private int round = 0;
+    private int round = 1;
 
     private TeamSc[] Teams = new TeamSc[6];
     private int PlayerCount = 0;
@@ -80,7 +80,7 @@ public class Quiz_Controller : MonoBehaviour
     }
     public void Start_Quiz(TeamSc[] teams,int count)
     {
-        round = 0;
+        round = 1;
         Teams = teams;
         PlayerCount = count;
         for (int n = 0; n < 6; n++)
@@ -88,7 +88,7 @@ public class Quiz_Controller : MonoBehaviour
             if (Teams[n].get_Name == null) Teams[n] = null;
         }
         Create_Teams();
-        StartCoroutine(NumberRound("ROUND 1"));
+        StartCoroutine(NumberRound("ROUND "+round));
         //QuestionsSc.Get4Question();      
        
     }
@@ -116,6 +116,8 @@ public class Quiz_Controller : MonoBehaviour
     {
         ThisQuestion = Var4Question[var_Button];
         QuestionsSc.SetCompleted(Var4ID[var_Button]);
+        for (int n = 0; n < PlayerCount; n++)
+            Teams[n].set_Answer(4);
 
         Question_Viev();
     }
@@ -178,8 +180,17 @@ public class Quiz_Controller : MonoBehaviour
         { 
             if (Teams[SelectedTeam].get_Answer != 4)
             {
-                ButtonVer[Teams[SelectedTeam].get_Answer].gameObject.transform.Find("char " + b[Teams[SelectedTeam].get_Answer]).gameObject.SetActive(false);
-                b[Teams[SelectedTeam].get_Answer] -=1;
+                for(int n=0; n<b.Length; n++)
+                {
+                    if(ButtonVer[Teams[SelectedTeam].get_Answer].gameObject.transform.Find("char "+(n+1)).gameObject.GetComponent<Image>().sprite== Teams[SelectedTeam].get_Mini)
+                    {
+                        ButtonVer[Teams[SelectedTeam].get_Answer].gameObject.transform.Find("char " + (n+1)).gameObject.SetActive(false);
+                        b[Teams[SelectedTeam].get_Answer] -=1;
+                    }
+                }
+
+                //ButtonVer[Teams[SelectedTeam].get_Answer].gameObject.transform.Find("char " + b[Teams[SelectedTeam].get_Answer]).gameObject.SetActive(false);
+                //b[Teams[SelectedTeam].get_Answer] -=1;
             }
             b[button_numb]++;
             ButtonVer[button_numb].gameObject.transform.Find("char " + b[button_numb]).gameObject.GetComponent<Image>().sprite = Teams[SelectedTeam].get_Mini;
@@ -190,6 +201,8 @@ public class Quiz_Controller : MonoBehaviour
         {
             button_OK.gameObject.SetActive(true);
             if(Teams[n].get_Answer==4) button_OK.gameObject.SetActive(false);
+            else if (Teams[0].get_Answer == 4) button_OK.gameObject.SetActive(false);
+            //Debug.Log(Teams[n].get_Answer + " ответ команды " + n);
         }
 
     }
@@ -219,7 +232,7 @@ public class Quiz_Controller : MonoBehaviour
             }
             Teams[n].set_Answer(4);
             TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().text = Teams[n].get_Score.ToString();
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
         }
         for (int n = 0; n < PlayerCount; n++)
             TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().color = Color.white;

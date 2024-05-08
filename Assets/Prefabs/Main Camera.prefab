@@ -2396,7 +2396,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.057605386, g: 0.122641504, b: 0.045701314, a: 0}
+  m_BackGroundColor: {r: 0.09451145, g: 0.05424528, b: 0.21698111, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2474,14 +2474,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 761759181db612d47a404e8730d9cc50, type: 3}
   - {fileID: 21300000, guid: 3bc50d4f8a083ef4081fba44e6e05db1, type: 3}
   all_Minis:
-  - {fileID: 21300000, guid: 5568e44e160154048bedb6b7336b6b19, type: 3}
-  - {fileID: 21300000, guid: 1fc4aacb62a449740a7ed70a749ac81b, type: 3}
-  - {fileID: 21300000, guid: 62dd5415953f44d479ac35e5bdf2f59c, type: 3}
-  - {fileID: 21300000, guid: 0976df076ab85564a82e07f7ad051dd2, type: 3}
-  - {fileID: 21300000, guid: bc571a2b7ef744e41b2de70caa8a3ea8, type: 3}
-  - {fileID: 21300000, guid: 63ad63243b33cce4aa7975371605fb58, type: 3}
-  - {fileID: 21300000, guid: 761759181db612d47a404e8730d9cc50, type: 3}
-  - {fileID: 21300000, guid: 3bc50d4f8a083ef4081fba44e6e05db1, type: 3}
+  - {fileID: 21300000, guid: 3be2872a370dbc846964b9e4949228c1, type: 3}
+  - {fileID: 21300000, guid: 2aa47be9cc7c25d45a321548ac7ae9b8, type: 3}
+  - {fileID: 21300000, guid: 91065ca9cd9f2b7459bf41e7abec3de1, type: 3}
+  - {fileID: 21300000, guid: 4b5c0e29202d14c48b0ceaaafb9295f0, type: 3}
+  - {fileID: 21300000, guid: 5b10df6fd3c50c244ade39ef1fad7eba, type: 3}
+  - {fileID: 21300000, guid: 1fe694ef6d597a744b7efa88d96782e5, type: 3}
+  - {fileID: 21300000, guid: 5d238facf8cd312439674d77031c826b, type: 3}
+  - {fileID: 21300000, guid: b2011c4a618cc714eb18fbbaf39cf605, type: 3}
   TeamName:
   - 
   - 
@@ -2504,12 +2504,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   TeamMini:
-  - {fileID: 21300000, guid: 5568e44e160154048bedb6b7336b6b19, type: 3}
-  - {fileID: 21300000, guid: 1fc4aacb62a449740a7ed70a749ac81b, type: 3}
-  - {fileID: 21300000, guid: 62dd5415953f44d479ac35e5bdf2f59c, type: 3}
-  - {fileID: 21300000, guid: 0976df076ab85564a82e07f7ad051dd2, type: 3}
-  - {fileID: 21300000, guid: bc571a2b7ef744e41b2de70caa8a3ea8, type: 3}
-  - {fileID: 21300000, guid: 63ad63243b33cce4aa7975371605fb58, type: 3}
+  - {fileID: 21300000, guid: 3be2872a370dbc846964b9e4949228c1, type: 3}
+  - {fileID: 21300000, guid: 2aa47be9cc7c25d45a321548ac7ae9b8, type: 3}
+  - {fileID: 21300000, guid: 91065ca9cd9f2b7459bf41e7abec3de1, type: 3}
+  - {fileID: 21300000, guid: 4b5c0e29202d14c48b0ceaaafb9295f0, type: 3}
+  - {fileID: 21300000, guid: 5b10df6fd3c50c244ade39ef1fad7eba, type: 3}
+  - {fileID: 21300000, guid: 1fe694ef6d597a744b7efa88d96782e5, type: 3}
   Teams:
   - {fileID: 3725921741236158734}
   - {fileID: 3725921741340680103}
@@ -2547,6 +2547,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d43fa2019ab7c2047947ee3fcfcadcfa, type: 2}
   - {fileID: 11400000, guid: d15c02006ec64a44f81987f97c5329ea, type: 2}
   - {fileID: 11400000, guid: e2da799bd7e4b284a809631323f1b326, type: 2}
+  Qustions_List: []
   ControllSc: {fileID: 921305351980446021}
   empty: {fileID: 11400000, guid: 7d35452c4ec31654bb8b582ec2342b1a, type: 2}
   IDforShuffle: 00000000000000000000000000000000000000000000000000000000

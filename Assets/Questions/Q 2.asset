@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5a0f26809885649a296e127c05ad38, type: 3}
   m_Name: Q 2
   m_EditorClassIdentifier: 
-  Category: "\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F 2"
-  Text: "\u0442\u0435\u043A\u0441\u04422"
-  Photo: {fileID: 0}
+  Category: "\u0418\u0433\u0440\u044B"
+  Text: "\u0418\u0437 \u043A\u0430\u043A\u043E\u0439 \u0438\u0433\u0440\u044B \u044D\u0442\u0430
+    \u043C\u043E\u043D\u0435\u0442\u043A\u0430?"
+  Photo: {fileID: 21300000, guid: ec7042ffdbf4a634d9aaabea4430ddda, type: 3}
   Video: {fileID: 0}
-  True: "\u043F\u0440\u0430\u0432\u0434\u0430\u0430"
+  True: Subway Surf
   False:
-  - "\u043B\u043E\u0436\u044C 1"
-  - "\u043B\u043E\u0436\u044C 2"
-  - "\u043B\u043E\u0436\u044C 3"
-  - "\u043B\u043E\u0436\u044C 4"
-  Score: 1000
+  - Candy Crash Soda
+  - Sims 2
+  - Roblox
+  - Sonic Adventure
+  - Genshin Impact
+  - Super Mario
+  Score: 100

@@ -265,8 +265,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0418\u043C\u044F \u041A\u043E\u043C\u0430\u043D\u0434\u044B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a22f7b351fbf544b2ddca02210475c, type: 2}
+  m_sharedMaterial: {fileID: -4561294615422448127, guid: c2a22f7b351fbf544b2ddca02210475c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_fontSizeBase: 29
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 29
+  m_fontSizeMin: 27
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2

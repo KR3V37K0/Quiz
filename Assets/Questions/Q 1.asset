@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5a0f26809885649a296e127c05ad38, type: 3}
   m_Name: Q 1
   m_EditorClassIdentifier: 
-  Category: "\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F 1"
-  Text: "\u0442\u0435\u043A\u0441\u04421"
-  Photo: {fileID: 0}
+  Category: "\u0410\u043D\u0438\u043C\u0435"
+  Text: "\u041A\u043E\u0433\u043E \u0438\u0437 \u044D\u0442\u0438\u0445 \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0435\u0439
+    \u0437\u043E\u0432\u0443\u0442 \u0420\u044D\u043C?"
+  Photo: {fileID: 21300000, guid: 35dfc26241614d341b7346df8020b6d9, type: 3}
   Video: {fileID: 0}
-  True: "\u043F\u0440\u0430\u0432\u0434\u0430"
+  True: 2
   False:
-  - "\u043B\u043E\u0436\u044C1"
-  - "\u043B\u043E\u0436\u044C2"
-  - "\u043B\u043E\u0436\u044C3"
-  - "\u043B\u043E\u0436\u044C4"
-  - "\u043B\u043E\u0436\u044C5"
-  Score: 200
+  - 4
+  - 3
+  - 1
+  Score: 100
