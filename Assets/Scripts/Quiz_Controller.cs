@@ -11,6 +11,7 @@ using Unity.Burst.Intrinsics;
 
 public class Quiz_Controller : MonoBehaviour
 {
+    public SaveLoaderSc SaveLoad;
     public int Max_Rounds;
     private int round = 1;
 
@@ -39,10 +40,12 @@ public class Quiz_Controller : MonoBehaviour
     private string[] Lies;
     public int True = 4;
     private int[] b = new int[4];
-
+    public GameObject Ramka, Input_Round;
+    private int r = 0;
 
     void all_Close()
     {
+
         canvas_Question.gameObject.SetActive(false);
         canvas_Selection.gameObject.SetActive(false);
         canvas_Teams.gameObject.SetActive(false);
@@ -80,6 +83,7 @@ public class Quiz_Controller : MonoBehaviour
     }
     public void Start_Quiz(TeamSc[] teams,int count)
     {
+        Max_Rounds = int.Parse(Input_Round.GetComponent<TMP_InputField>().text)+1;
         round = 1;
         Teams = teams;
         PlayerCount = count;
@@ -94,6 +98,7 @@ public class Quiz_Controller : MonoBehaviour
     }
     public void VizualizeVariants(int[] ID, Q_Example[] Questions)
     {
+        Ramka.SetActive(false);
         panel_Image.SetActive(false);
         canvas_Question.gameObject.SetActive(false);
         canvas_Selection.gameObject.SetActive(true );
@@ -125,6 +130,7 @@ public class Quiz_Controller : MonoBehaviour
 
     public void Question_Viev()
     {
+        Ramka.SetActive(false);
         round++;
         button_OK.gameObject.SetActive(false);
         if (ThisQuestion.photo) panel_Image.transform.Find("Image").gameObject.GetComponent<Image>().sprite = ThisQuestion.photo;
@@ -197,17 +203,22 @@ public class Quiz_Controller : MonoBehaviour
             ButtonVer[button_numb].gameObject.transform.Find("char " + b[button_numb]).gameObject.SetActive(true);
             Teams[SelectedTeam].set_Answer(button_numb);
         }
-        for(int n = 0; n < PlayerCount; n++)
+        button_OK.gameObject.SetActive(true);
+        for (int n = 0; n < PlayerCount; n++)
         {
-            button_OK.gameObject.SetActive(true);
+            //Debug.Log(PlayerCount + " игроков");
+            //Debug.Log(Teams[n].get_Answer == 4);
+            
             if(Teams[n].get_Answer==4) button_OK.gameObject.SetActive(false);
-            else if (Teams[0].get_Answer == 4) button_OK.gameObject.SetActive(false);
+            //else if (Teams[0].get_Answer == 4) button_OK.gameObject.SetActive(false);
             //Debug.Log(Teams[n].get_Answer + " ответ команды " + n);
         }
 
     }
     public void Button_SetPlayer(int playerID)
     {
+        Ramka.SetActive(true);
+        Ramka.transform.position = TeamsAvatar[playerID].transform.position;
         SelectedTeam = playerID;
     }
     public void Button_OK_Answers()
@@ -216,8 +227,24 @@ public class Quiz_Controller : MonoBehaviour
     }
     public IEnumerator Calculate()
     {
+        Ramka.SetActive(false);
         button_OK.gameObject.SetActive(false);
-        ButtonVer[True].interactable = false;
+        //ButtonVer[True].interactable = false;
+
+
+        ButtonVer[0].GetComponent<Graphic>().color = Color.red;
+        ButtonVer[0].interactable = false;
+        ButtonVer[1].GetComponent<Graphic>().color = Color.red;
+        ButtonVer[1].interactable = false;
+        ButtonVer[2].GetComponent<Graphic>().color = Color.red;
+        ButtonVer[2].interactable = false;
+        ButtonVer[3].GetComponent<Graphic>().color = Color.red;
+        ButtonVer[3].interactable = false;
+        ButtonVer[True].GetComponent<Graphic>().color=Color.green;
+        ButtonVer[True].interactable = true;
+
+
+
         for (int n = 0; n < PlayerCount; n++)
         {
             if (Teams[n].get_Answer == True)
@@ -234,12 +261,21 @@ public class Quiz_Controller : MonoBehaviour
             TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().text = Teams[n].get_Score.ToString();
             yield return new WaitForSeconds(1f);
         }
+        yield return new WaitForSeconds(3f);
         for (int n = 0; n < PlayerCount; n++)
             TeamsAvatar[n].gameObject.transform.Find("ICO/Text_Score").gameObject.GetComponent<TMP_Text>().color = Color.white;
 
+        
 
-        ButtonVer[True].interactable = true;
-        for(int n = 0; n < 4; n++)
+        ButtonVer[0].interactable = true;
+        ButtonVer[0].GetComponent<Graphic>().color = Color.white;
+        ButtonVer[1].interactable = true;
+        ButtonVer[1].GetComponent<Graphic>().color = Color.white;
+        ButtonVer[2].interactable = true;
+        ButtonVer[2].GetComponent<Graphic>().color = Color.white;
+        ButtonVer[3].interactable = true;
+        ButtonVer[3].GetComponent<Graphic>().color = Color.white;
+        for (int n = 0; n < 4; n++)
         {
             for(int n2 = 1;n2 < 7; n2++) 
             {
@@ -247,7 +283,7 @@ public class Quiz_Controller : MonoBehaviour
             }
             b[n] = 0;
         }
-        int maxScore=0, countWiner = 0;
+        int maxScore=-100000, countWiner = 0;
         for (int n = 0;n < PlayerCount;n++)
         {
             if (Teams[n].get_Score>maxScore)maxScore = Teams[n].get_Score;
@@ -256,6 +292,7 @@ public class Quiz_Controller : MonoBehaviour
         {
             if (Teams[n].get_Score == maxScore) countWiner++;       
         }
+        Debug.Log(countWiner);
         if ((round >= Max_Rounds) && (countWiner == 1)) StartCoroutine(Win());
         else 
         {
@@ -286,7 +323,7 @@ public class Quiz_Controller : MonoBehaviour
         }
         for (int i = PlayerCount-1; i > -1; i--) 
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             //Debug.Log(Rating[i].get_Score.ToString());
             canvas_Win.gameObject.transform.Find("Panel/Place " + (i+1)).gameObject.SetActive(true);
             canvas_Win.gameObject.transform.Find("Panel/Place " + (i + 1) + "/Panel_Score/Text_Name").gameObject.GetComponent<TMP_Text>().text = Rating[i].get_Name;
@@ -295,18 +332,19 @@ public class Quiz_Controller : MonoBehaviour
             canvas_Win.gameObject.transform.Find("Panel/Place " + (i + 1) + "/Panel_Score/Image_Mini/Text_Place").gameObject.GetComponent<TMP_Text>().text = (i + 1).ToString();
 
 
+            SaveLoad.SaveRecord(Rating[i].get_Name, Rating[i].get_Score, System.DateTime.Now.Day.ToString()+"."+ System.DateTime.Now.Month.ToString()+"."+ System.DateTime.Now.Year.ToString());
         }
         canvas_Win.gameObject.transform.Find("Panel/Text_Winner").gameObject.SetActive(true);
         canvas_Win.gameObject.transform.Find("Image_WinnerSkin").gameObject.SetActive(true);
         canvas_Win.gameObject.transform.Find("Image_WinnerSkin").gameObject.GetComponent<Image>().sprite = Rating[0].get_Skin;
 
-        yield return new WaitForSeconds(1.5f);
+        //yield return new WaitForSeconds(1f);
     }
     public void Button_ExitToMenu()
     {
-        //all_Close();
-        //LobbySc.Start();
-        Application.Quit();
+        all_Close();
+        LobbySc.Start();
+        LobbySc.canvas_Main.transform.Find("Button_Start_1").GetComponent<Button>().interactable = false;
     }
     private IEnumerator NumberRound(string t)
     {
@@ -316,5 +354,9 @@ public class Quiz_Controller : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         all_Close();
         QuestionsSc.Get4Question();
+        if (r == PlayerCount) r = 0;
+        Ramka.transform.position = TeamsAvatar[r].transform.position;
+        r++;
+        Ramka.SetActive(true);
     }
 }

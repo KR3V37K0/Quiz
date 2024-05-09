@@ -20,6 +20,7 @@ public class Menu_and_Lobby : MonoBehaviour
     public Sprite[] TeamMini;
     public GameObject[] Teams;
     public Quiz_Controller Quiz_ControllerSc;
+    public SaveLoaderSc SaveLoad;
 
     public GameObject Record_Panel,Record_Line;
 
@@ -106,7 +107,6 @@ public class Menu_and_Lobby : MonoBehaviour
         Teams[ActiveTeam - 1].transform.Find("Team_panel_Group/Button_Add").gameObject.SetActive(false);// Button Add
         TeamName[ActiveTeam - 1] = "Команда "+ActiveTeam;
         Teams[ActiveTeam - 1].gameObject.transform.GetChild(0).gameObject.transform.Find("Input_Team_Name").gameObject.GetComponent<TMP_InputField>().text = TeamName[ActiveTeam - 1];
-        OnTeamPanel("Team_"+ActiveTeam);
 
         int n = ActiveTeam;
 
@@ -229,9 +229,32 @@ public class Menu_and_Lobby : MonoBehaviour
         }
         
     }
+
+
     public void Button_ViewRecord()
     {
         Record_Panel.SetActive(true);
+        List<Record> records = SaveLoad.LoadRecord();
+        for (int i = 0; i < records.Count; i++)
+        {
+            for (int j = 0; j < records.Count - 1; j++)
+            {
+                if (records[j].Score < records[j + 1].Score)
+                {
+                    Record z = records[j];
+                    records[j] = records[j + 1];
+                    records[j + 1] = z;
+                }
+            }
+        }
+        for(int i = 0; i < records.Count; i++)
+        {
+            Record_Line.transform.Find("Text_Place").GetComponent<TMP_Text>().text = (i+1).ToString();
+            Record_Line.transform.Find("Text_Team").GetComponent<TMP_Text>().text = records[i].Name.ToString();
+            Record_Line.transform.Find("Text_Score").GetComponent<TMP_Text>().text = records[i].Score.ToString();
+            Record_Line.transform.Find("Text_Data").GetComponent<TMP_Text>().text = records[i].Data.ToString();
+            Instantiate(Record_Line, Record_Panel.transform.Find("Scroll View/Viewport/Content"));
+        }
     }
     public void Button_CloseRecord()
     {

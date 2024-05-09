@@ -20,8 +20,8 @@ MonoBehaviour:
   Video: {fileID: 0}
   True: Minecraft
   False:
-  - 'TES V: Skyrim'
   - Tetris
   - GTA V
   - Pac-Man
-  Score: 100
+  - 'TES V: Skyrim'
+  Score: 600

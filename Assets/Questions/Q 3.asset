@@ -19,9 +19,9 @@ MonoBehaviour:
   Video: {fileID: 0}
   True: "\u041A\u043E\u043F\u0430\u0442\u0435\u043B\u044C \u041E\u043D\u043B\u0430\u0439\u043D"
   False:
-  - Minecraft
-  - Cube World
   - Terraria
+  - Cube World
   - Block Story
   - Block Craft
-  Score: 100
+  - Minecraft
+  Score: 500
