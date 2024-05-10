@@ -342,9 +342,10 @@ public class Quiz_Controller : MonoBehaviour
     }
     public void Button_ExitToMenu()
     {
+        LobbySc.canvas_Main.gameObject.transform.Find("Button_Start_1").GetComponent<Button>().interactable = false;
         all_Close();
         LobbySc.Start();
-        LobbySc.canvas_Main.transform.Find("Button_Start_1").GetComponent<Button>().interactable = false;
+        
     }
     private IEnumerator NumberRound(string t)
     {

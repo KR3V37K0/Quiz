@@ -259,5 +259,10 @@ public class Menu_and_Lobby : MonoBehaviour
     public void Button_CloseRecord()
     {
         Record_Panel.SetActive(false);
+        foreach (var child in Record_Panel.gameObject.transform.Find("Scroll View/Viewport/Content").gameObject.GetComponentsInChildren<Transform>())
+        {
+            //Debug.Log(child.gameObject.name);
+            if(child.gameObject.name!="Content") Destroy(child.gameObject);
+        }
     }
 }
